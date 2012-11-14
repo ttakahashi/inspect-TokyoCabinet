@@ -47,9 +47,11 @@ list.each{ |key, value|
   value = h.dup
   comp_list.store(key, value)
 }
+offset = h.dup
 
 # count start with comp_list
 strict_time = Time.mktime(2012, 9, 28, 19, 00, 00)
+comp_offset = Hash.new()
 fp = File.open(ARGV[0], "r")
 fp.each{ |line|
   date, pair = trim(line)
@@ -57,12 +59,25 @@ fp.each{ |line|
   read_time =  Time.parse(date)
 
   while read_time >= strict_time + 60 * 5
+    comp_list[strict_time].each{ |key5, val5|
+      val5 += offset[key5] 
+      comp_list[strict_time][key5] = val5
+    }
+    offset.each{ |key4, val4|
+        val4 = comp_list[strict_time][key4]
+        offset[key4] = val4
+    }
     strict_time = strict_time + 60 * 5
   end
   if read_time <= strict_time + 60 * 5
     comp_list[strict_time][pair]  += 1
   end
 }
+comp_list[strict_time].each{ |key5, val5|
+  val5 += offset[key5] 
+  comp_list[strict_time][key5] = val5
+}
+
 fp.close
 
 fp = File.open("result", "w")
@@ -86,5 +101,3 @@ comp_list.each{ |key1, value1|
   }
   fp.write("\n")
 }
-
-
