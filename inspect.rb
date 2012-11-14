@@ -12,7 +12,7 @@ end
 
 # make table first
 # create time row
-strict_time = Time.mktime(2012, 9, 28, 19, 00, 00)
+strict_time = Time.mktime(2012, 9, 28, 19, 30, 00)
 list = Hash.new()
 pair = Hash.new()
 list.store(strict_time,  pair)
@@ -50,7 +50,7 @@ list.each{ |key, value|
 offset = h.dup
 
 # count start with comp_list
-strict_time = Time.mktime(2012, 9, 28, 19, 00, 00)
+strict_time = Time.mktime(2012, 9, 28, 19, 30, 00)
 comp_offset = Hash.new()
 fp = File.open(ARGV[0], "r")
 fp.each{ |line|
